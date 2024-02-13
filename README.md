@@ -8,11 +8,9 @@ Image coming soon!
  - [What is RALTS Lite?](#what-is-ralts)
  - [What is RALTS Lite for?](#what-is-ralts-for)
  - [Example use cases](#example-use-cases)
- - [Installation](#installation)
- - [Example Experiments](#example-experiments)
- - [Share with Others](#share-with-others)
- - [Features](#features) (see the [docs](https://chainforge.ai/docs/nodes/) for more comprehensive info)
- - [Development and How to Cite](#development)
+ - [Development](#development)
+ - [Inspiration](#inspiration)
+ - [License](#license)
 
 ## What is RALTS Lite?
 
