@@ -70,9 +70,12 @@ def main():
 	try:
 		plot_result(top_topics[::-1][-10:], scores[::-1][-10:])
 	except ValueError:
-		st.error("""
-			It looks like no topics were found for this text. This might be because the text length is insufficient
-			or it doesn't have enough extractable terms. Try again with longer text.""")
+		st.subheader("No topics found!")
+		st.warning("""
+			It looks like no topics were found for this text. This might be because the text length
+   			is insufficient	or it doesn't have enough extractable terms.
+   
+   			Try again with longer text.""")
 
 # Dictionaries
 
