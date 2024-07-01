@@ -67,8 +67,13 @@ def main():
 			scores = df_classify_topic['Relevance Score'].head(10).to_list()
 		except:
 			st.warning("Sorry about this, there seemed to be an error. Trying again...")
-
-	plot_result(top_topics[::-1][-10:], scores[::-1][-10:])
+	if top_topics:
+		try:
+			plot_result(top_topics[::-1][-10:], scores[::-1][-10:])
+		except ValueError:
+			st.error("""
+   				It looks like no topics were found for this text. This might be because the text length is insufficient
+       				or it doesn't have enough extractable terms. Try again with longer text.""")
 
 # Dictionaries
 
