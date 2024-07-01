@@ -1,6 +1,6 @@
 # RALTS Lite (Really Awesome Lexicon and Tag Suggester)
 
-**A Streamlit web app that performs NLP analysis on a body of text or URL.**
+**A Streamlit web app that performs NLP analysis on a body of text or URL(s).**
 
 Image coming soon!
 
@@ -14,12 +14,9 @@ Image coming soon!
 
 ## What is RALTS Lite?
 
-RALTS Lite (Really Awesome Lexicon and Tag Suggester) is a Streamlit web app that performs NLP analysis on a body of text or URL. It uses two APIs to perform these tasks:
+RALTS Lite (Really Awesome Lexicon and Tag Suggester) is a Streamlit web app that performs NLP analysis on a body of text or URL(s). It uses the TextRazor API, which extracts entities, topics, and categories from any given text.
 
-1. The TextRazor API, which extracts entities, topics, and categories from any given text
-2. The Hugging Face Inference API, which accesses a language model to figure out what that body of text is about, based on the extract topics
-
-RALTS Lite is smaller version of RALTS Lite, an app I built for myself. If you want a lengthy explanation of why I built that app, [you can read about it on my website](https://lukealexdavis.co.uk/posts/introducing-ralts/)
+It's a "Lite" version of an app I built for myself. If you want a lengthy explanation of why I built that app, [you can read about it on my website](https://lukealexdavis.co.uk/posts/introducing-ralts/)
 
 ## What is RALTS Lite for?
 
