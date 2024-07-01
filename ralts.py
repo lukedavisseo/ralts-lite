@@ -74,8 +74,9 @@ def main():
 		st.warning("""
 			It looks like no topics were found for this text. This might be because the text length
    			is insufficient	or it doesn't have enough extractable terms.
-   
-   			Try again with longer text.""")
+      
+      			Try again with longer text.
+	 	""")
 
 # Dictionaries
 
