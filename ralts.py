@@ -250,7 +250,6 @@ def data_viz():
 		st.dataframe(grouped_df_cat)
 
 	elif input_type == 'Multiple URLs':
-
 		df_ent = pd.DataFrame(ent_dict)
 		grouped_df_ent = df_ent.groupby(['Entity', 'Page URL']).agg({'Relevance Score': ['mean'], 'Wikidata URI': ['max']}).round(3)
 		grouped_df_ent = grouped_df_ent.reset_index().sort_values(by=('Relevance Score', 'mean'), ascending=False)
@@ -259,14 +258,18 @@ def data_viz():
 		st.dataframe(grouped_df_ent)
 
 		df_topic = pd.DataFrame(topics_dict)
-		grouped_df_topic = df_topic.groupby(['Topic',  'Page URL']).agg({'Relevance Score': ['mean'], 'Page URL': ['max']}).round(3)
+		grouped_df_topic = (
+	            df_topic.groupby(["Topic", "Page URL"])
+	            .agg({"Relevance Score": ["mean"]})
+	            .round(3)
+	        )
 		grouped_df_topic = grouped_df_topic.reset_index().sort_values(by=('Relevance Score', 'mean'), ascending=False)
 		grouped_df_topic.columns = grouped_df_topic.columns.droplevel(1)
 		st.header('Topics')
 		st.dataframe(grouped_df_topic)
 
 		df_cat = pd.DataFrame(categories_multi_dict)
-		grouped_df_cat = df_cat.groupby(['Category',  'Page URL']).agg({'Relevance Score': ['mean'], 'Page URL': ['max']}).round(3)
+		grouped_df_cat = df_cat.groupby(['Category', 'Page URL']).agg({'Relevance Score': ['mean']}).round(3)
 		grouped_df_cat = grouped_df_cat.reset_index().sort_values(by=('Relevance Score', 'mean'), ascending=False)
 		grouped_df_cat.columns = grouped_df_cat.columns.droplevel(1)
 		st.header('Categories')
