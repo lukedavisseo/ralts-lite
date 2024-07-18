@@ -104,6 +104,8 @@ categories_multi_dict = {
 	'Relevance Score': []
 }
 
+all_txt = []
+
 # Streamlit stuff
 
 st.sidebar.title('Input type selector')
