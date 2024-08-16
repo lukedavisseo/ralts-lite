@@ -33,28 +33,34 @@ def plot_result(top_topics, scores):
 	st.plotly_chart(fig)
 
 def req(url):
-	resp = requests.get(url, headers=headers)
-	soup = BeautifulSoup(resp.content, 'html.parser')
-	if soup.find("div", id="comments") and soup.find("div", id="secondary"):
-		remove_comments = soup.find("div", id="comments")
-		remove_comments.extract()
-		remove_secondary = soup.find("div", id="secondary")
-		remove_secondary.extract()
-		extract_text = [t.text for t in soup.find_all(['h1', 'p'])]
-		paragraphs = ' '.join(extract_text)
-		return paragraphs
-	elif soup.find("div", id="comments") and soup.find("aside", id="secondary"):
-		remove_comments = soup.find("div", id="comments")
-		remove_comments.extract()
-		remove_secondary = soup.find("aside", id="secondary")
-		remove_secondary.extract()
-		extract_text = [t.text for t in soup.find_all(['h1', 'p'])]
-		paragraphs = ' '.join(extract_text)
-		return paragraphs
-	else:
-		extract_text = [t.text for t in soup.find_all(['h1', 'p'])]
-		paragraphs = ' '.join(extract_text)
-		return paragraphs
+	try:
+		# For non-200 status codes
+		resp = requests.get(url, headers=headers)
+		resp.raise_for_status()
+		soup = BeautifulSoup(resp.content, 'html.parser')
+		if soup.find("div", id="comments") and soup.find("div", id="secondary"):
+			remove_comments = soup.find("div", id="comments")
+			remove_comments.extract()
+			remove_secondary = soup.find("div", id="secondary")
+			remove_secondary.extract()
+			extract_text = [t.text for t in soup.find_all(['h1', 'p'])]
+			paragraphs = ' '.join(extract_text)
+			return paragraphs
+		elif soup.find("div", id="comments") and soup.find("aside", id="secondary"):
+			remove_comments = soup.find("div", id="comments")
+			remove_comments.extract()
+			remove_secondary = soup.find("aside", id="secondary")
+			remove_secondary.extract()
+			extract_text = [t.text for t in soup.find_all(['h1', 'p'])]
+			paragraphs = ' '.join(extract_text)
+			return paragraphs
+		else:
+			extract_text = [t.text for t in soup.find_all(['h1', 'p'])]
+			paragraphs = ' '.join(extract_text)
+			return paragraphs
+	except requests.exceptions.HTTPError as err:
+		st.error(err)
+		raise SystemExit(err)
 
 # Main function
 def main():
