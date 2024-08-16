@@ -121,7 +121,7 @@ input_type = st.sidebar.radio('Select your input type', ['Text', 'URL', 'Multipl
 # Determines input types
 st.title('Welcome to RALTS Lite!')
 st.write('This script uses natural language classification to extract entities, topics, and categories from any body of text or URL(s).')
-st.info(f'### Requests used today: {int(account_manager.get_account().requests_used_today)}/500')
+st.info(f'Requests used today: {int(account_manager.get_account().requests_used_today)}/500')
 if input_type == 'Text':
 	global txt
 	txt = st.text_area('Enter text to be analysed...')
