@@ -121,6 +121,7 @@ input_type = st.sidebar.radio('Select your input type', ['Text', 'URL', 'Multipl
 # Determines input types
 st.title('Welcome to RALTS Lite!')
 st.write('This script uses natural language classification to extract entities, topics, and categories from any body of text or URL(s).')
+st.info(f'### Requests used today: {int(account_manager.get_account().requests_used_today)}/500')
 if input_type == 'Text':
 	global txt
 	txt = st.text_area('Enter text to be analysed...')
@@ -285,17 +286,14 @@ def data_viz():
 		
 # Execute functions
 if submit and input_type == 'Text':
-	st.markdown(f'### Requests used: {int(account_manager.get_account().requests_used_today)+1}/500')
 	textrazor_extraction('Text')
 	data_viz()
 	main()
 elif submit and input_type == 'URL':
-	st.markdown(f'### Requests used: {int(account_manager.get_account().requests_used_today)+1}/500')
 	textrazor_extraction('URL')
 	data_viz()
 	main()
 elif submit and input_type == 'Multiple URLs':
-	st.markdown(f'### Requests used: {int(account_manager.get_account().requests_used_today)+1}/500')
 	urls = [line for line in multi_url.split("\n")]
 	textrazor_extraction('Multiple URLs')
 	data_viz()
