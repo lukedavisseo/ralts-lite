@@ -34,6 +34,7 @@ def plot_result(top_topics, scores):
 
 def req(url):
 	try:
+		# For non-200 status codes
 		resp = requests.get(url, headers=headers)
 		resp.raise_for_status()
 		soup = BeautifulSoup(resp.content, 'html.parser')
