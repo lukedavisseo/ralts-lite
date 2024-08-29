@@ -184,7 +184,7 @@ def textrazor_extraction(input_type):
 		for u, v in zip(urls,range(len(urls))):
 			try:
 				txt = req(u)
-				my_bar.progress(((v + 1)*100), text=progress_text)
+				my_bar.progress(((round(((v+1)/len(urls))*100))), text=progress_text)
 				all_txt.append(txt)
 				response = client.analyze(txt)
 				for entity in response.entities():
