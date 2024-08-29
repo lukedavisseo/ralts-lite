@@ -16,6 +16,8 @@ client.set_classifiers(["textrazor_newscodes"])
 client.set_do_compression(do_compression=True)
 account_manager = textrazor.AccountManager()
 
+progress_text = "Extraction in progress. Please wait."
+
 # Graph plot function
 def plot_result(top_topics, scores):
 	top_topics = np.array(top_topics)
@@ -179,10 +181,10 @@ def textrazor_extraction(input_type):
 
 	elif input_type == 'Multiple URLs':
 
-		for u in urls:
+		for u, v in zip(urls,range(len(urls))):
 			try:
 				txt = req(u)
-				st.success(f'{u} - Extraction complete!')
+				my_bar.progress(((v + 1)*100), text=progress_text)
 				all_txt.append(txt)
 				response = client.analyze(txt)
 				for entity in response.entities():
@@ -294,6 +296,7 @@ elif submit and input_type == 'URL':
 	data_viz()
 	main()
 elif submit and input_type == 'Multiple URLs':
+	my_bar = st.progress(0, text=progress_text)
 	urls = [line for line in multi_url.split("\n")]
 	textrazor_extraction('Multiple URLs')
 	data_viz()
