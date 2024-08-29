@@ -58,6 +58,7 @@ def req(url):
 			extract_text = [t.text for t in soup.find_all(['h1', 'p'])]
 			paragraphs = ' '.join(extract_text)
 			return paragraphs
+		st.write(f'{url} - Extraction complete!')
 	except requests.exceptions.HTTPError as err:
 		st.error(err)
 
