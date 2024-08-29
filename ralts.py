@@ -208,6 +208,8 @@ def textrazor_extraction(input_type):
 			except Exception as e:
 				st.error(e)
 				continue
+		progress_text = "Extraction complete!"
+		my_bar.progress(100, text=progress_text)
 
 # DataFrames to present above data
 def data_viz():
