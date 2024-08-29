@@ -60,7 +60,6 @@ def req(url):
 			return paragraphs
 	except requests.exceptions.HTTPError as err:
 		st.error(err)
-		st.stop()
 
 # Main function
 def main():
