@@ -24,6 +24,8 @@ client.set_classifiers(["textrazor_newscodes"])
 client.set_do_compression(do_compression=True)
 account_manager = textrazor.AccountManager()
 
+progress_text = "Extraction in progress. Please wait."
+
 # Graph plot function
 def plot_result(top_topics, scores):
 	top_topics = np.array(top_topics)
@@ -72,7 +74,6 @@ def req(url):
 			return paragraphs
 	except requests.exceptions.HTTPError as err:
 		st.error(err)
-		st.stop()
 
 def remove_stopwords(text):
     refined_text = ' '.join([word for word in text.split() if word.lower() not in stopwords])
@@ -196,9 +197,10 @@ def textrazor_extraction(input_type):
 
 	elif input_type == 'Multiple URLs':
 
-		for u in urls:
+		for u, v in zip(urls,range(len(urls))):
 			try:
 				txt = req(u)
+				my_bar.progress(((round(((v+1)/len(urls))*100))), text=progress_text)
 				all_txt.append(txt)
 				response = client.analyze(txt)
 				for entity in response.entities():
@@ -222,6 +224,8 @@ def textrazor_extraction(input_type):
 			except Exception as e:
 				st.error(e)
 				continue
+		final_text = "Extraction complete!"
+		my_bar.progress(100, text=final_text)
 
 # DataFrames to present above data
 def data_viz():
@@ -312,6 +316,7 @@ elif submit and input_type == 'URL':
 	main()
 	retrieve_used_requests()
 elif submit and input_type == 'Multiple URLs':
+	my_bar = st.progress(0, text=progress_text)
 	urls = [line for line in multi_url.split("\n")]
 	textrazor_extraction('Multiple URLs')
 	data_viz()
