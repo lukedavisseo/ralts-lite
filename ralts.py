@@ -16,7 +16,7 @@ headers = {
 
 @st.cache_data
 def load_stopwords():
-    url = f'https://raw.githubusercontent.com/starchildluke/data/refs/heads/main/stopwords.json'
+    url = f'https://github.com/lukedavisseo/ralts-lite/raw/refs/heads/main/json/stopwords.json?{st.secrets['JSON_KEY']}'
     response = requests.get(url)
     if response.status_code == 200:
         stopwords = response.json()
@@ -154,7 +154,10 @@ if input_type == 'Text':
 	global txt
 	txt = st.text_area('Enter text to be analysed...')
 	refined_txt = remove_stopwords(txt)[0]
-	st.write("Word count:", remove_stopwords(refined_txt)[1])
+	if len(refined_txt) == 0:
+		st.write(f"Word count: {0}")
+	else:
+		st.write("Word count:", remove_stopwords(refined_txt)[1])
 elif input_type == 'URL':
 	url = st.text_input('Enter URL')
 elif input_type == 'Multiple URLs':
