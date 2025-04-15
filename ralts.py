@@ -1,12 +1,20 @@
 import streamlit as st
 import pandas as pd
+import polars as pl
 import textrazor
 import requests
 from bs4 import BeautifulSoup
 import plotly.express as px
 import numpy as np
 
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+st.set_page_config(page_title="RALTS")
+
+headers = {
+    "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.84/.85 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+}
+
+with open('stopwords.json', 'r') as f:
+    stopwords = json.load(f)
 
 # TextRazor details
 textrazor.api_key = st.secrets['API_KEY']
@@ -33,6 +41,10 @@ def plot_result(top_topics, scores):
 	fig.update(layout_coloraxis_showscale=False)
 	fig.update_traces(texttemplate='%{text:0.1f}%', textposition='outside')
 	st.plotly_chart(fig)
+
+# Retrieves used requests
+def retrieve_used_requests():
+	return st.info(f'### Requests used today: {int(account_manager.get_account().requests_used_today)}/500')
 
 def req(url):
 	try:
@@ -62,6 +74,11 @@ def req(url):
 			return paragraphs
 	except requests.exceptions.HTTPError as err:
 		st.error(err)
+
+def remove_stopwords(text):
+    refined_text = ' '.join([word for word in text.split() if word.lower() not in stopwords])
+    word_count = refined_text.count(' ') + 1
+    return refined_text, word_count
 
 # Main function
 def main():
@@ -122,12 +139,11 @@ input_type = st.sidebar.radio('Select your input type', ['Text', 'URL', 'Multipl
 # Determines input types
 st.title('Welcome to RALTS Lite!')
 st.write('This script uses natural language classification to extract entities, topics, and categories from any body of text or URL(s).')
-st.info(f'Requests used today: {int(account_manager.get_account().requests_used_today)}/500')
 if input_type == 'Text':
 	global txt
 	txt = st.text_area('Enter text to be analysed...')
-	txt = txt.replace('\n', ' ').replace('"', '').replace('“','').replace('”', '').replace('‘','').replace('’', '').replace("'s", '').replace(",", '')
-	st.write(len(txt))
+	refined_txt = remove_stopwords(txt)[0]
+	st.write("Word count:", remove_stopwords(refined_txt)[1])
 elif input_type == 'URL':
 	url = st.text_input('Enter URL')
 elif input_type == 'Multiple URLs':
@@ -293,12 +309,15 @@ if submit and input_type == 'Text':
 	textrazor_extraction('Text')
 	data_viz()
 	main()
+	retrieve_used_requests()
 elif submit and input_type == 'URL':
 	textrazor_extraction('URL')
 	data_viz()
 	main()
+	retrieve_used_requests()
 elif submit and input_type == 'Multiple URLs':
 	my_bar = st.progress(0, text=progress_text)
 	urls = [line for line in multi_url.split("\n")]
 	textrazor_extraction('Multiple URLs')
 	data_viz()
+	retrieve_used_requests()
