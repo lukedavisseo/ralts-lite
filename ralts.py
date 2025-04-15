@@ -16,7 +16,7 @@ headers = {
 
 @st.cache_data
 def load_stopwords():
-    url = f'https://github.com/lukedavisseo/ralts-lite/raw/refs/heads/main/json/stopwords.json?token={st.secrets["JSON_TOKEN"]}'
+    url = f'https://raw.githubusercontent.com/starchildluke/data/refs/heads/main/stopwords.json'
     response = requests.get(url)
     if response.status_code == 200:
         stopwords = response.json()
