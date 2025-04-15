@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import polars as pl
+# import polars as pl
 import textrazor
 import requests
 from bs4 import BeautifulSoup
