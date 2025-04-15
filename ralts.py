@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import json
 # import polars as pl
 import textrazor
 import requests
@@ -13,8 +14,18 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.84/.85 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 }
 
-with open('stopwords.json', 'r') as f:
-    stopwords = json.load(f)
+@st.cache_data
+def load_stopwords():
+    url = f'https://github.com/lukedavisseo/ralts-lite/raw/refs/heads/main/json/stopwords.json?{st.secrets['JSON_KEY']}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        stopwords = response.json()
+        return stopwords
+    else:
+        st.error("Failed to load data from GitHub.")
+        return None
+
+stopwords = load_stopwords()
 
 # TextRazor details
 textrazor.api_key = st.secrets['API_KEY']
