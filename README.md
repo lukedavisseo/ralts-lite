@@ -1,10 +1,12 @@
 # RALTS Lite (Really Awesome Lexicon and Tag Suggester)
 
-**A Streamlit web app that performs NLP analysis on a body of text or URL(s).**
+<a href="https://pokemondb.net/pokedex/ralts"><img src="https://img.pokemondb.net/sprites/home/shiny/ralts.png" alt="Ralts" width="128" height="128" align="right"></a>
 
-Image coming soon!
+RALTS Lite (Really Awesome Lexicon and Tag Suggester) is a script that can analyse any body of text or URL to find extract keywords, topics, and categories using NLP (natural language processing) via the TextRazor API and a BART language model.
 
-# Table of Contents
+I've written a full-length blog post about the original RALTS app and why I made it, which you can [read on my personal website](https://lukealexdavis.co.uk/post/introducing-ralts/). 
+
+## Table of Contents
  - [What is RALTS Lite?](#what-is-ralts)
  - [What is RALTS Lite for?](#what-is-ralts-for)
  - [Example use cases](#example-use-cases)
