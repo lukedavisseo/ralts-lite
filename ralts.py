@@ -31,8 +31,9 @@ stopwords = load_stopwords()
 textrazor.api_key = st.secrets['API_KEY']
 
 client = textrazor.TextRazor(extractors=["entities", "topics"])
-client.set_classifiers(["textrazor_newscodes"])
+client.set_classifiers(["textrazor_mediatopics_2023Q1"])
 client.set_do_compression(do_compression=True)
+client.set_cleanup_use_metadata(use_metadata=True)
 account_manager = textrazor.AccountManager()
 
 progress_text = "Extraction in progress. Please wait."
