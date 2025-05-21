@@ -85,7 +85,7 @@ def req(url):
 			paragraphs = ' '.join(extract_text)
 			return paragraphs
 	except requests.exceptions.HTTPError as err:
-		st.error(err)
+		st.error(f"Error found for {url} - {err}")
 
 def remove_stopwords(text):
     refined_text = ' '.join([word for word in text.split() if word.lower() not in stopwords])
